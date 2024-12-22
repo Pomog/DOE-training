@@ -1,0 +1,67 @@
+# Analysis of a Fractional 2?4-1 Factorial Design
+
+#visulalize data
+str(filtF)
+
+#creating factors for the Analysis of Variance
+filtF$Factor_T <- as.factor(filtF$T)
+filtF$Factor_P <- as.factor(filtF$P)
+filtF$Factor_C <- as.factor(filtF$C)
+filtF$Factor_W <- as.factor(filtF$W)
+str(filtF)
+View(filtF)
+
+#ANOVA
+anova1 <- aov(FR ~ Factor_T*Factor_P*Factor_C*Factor_W, data = filtF)
+summary(anova1)
+
+anova2 <- aov(FR ~ Factor_T*Factor_C + Factor_T*Factor_W, data = filtF)
+summary(anova2)
+
+# regression model with coded variables
+coded.model <- lm(FR ~ xT*xP*xC*xW, data=filtF)
+summary(coded.model)
+
+# regression model with coded variables
+coded.model <- lm(FR ~ xT + xC + xW + xT*xC + xT*xW, data=filtF)
+summary(coded.model)
+
+coded.model <- lm(FR ~ xT*xP*xC*xW, data=filtF)
+summary(coded.model)
+
+# regression model with natural variables
+nat.model <- lm(FR ~ T + C + W + T*C + T*W, data=filtF)
+summary(nat.model)
+
+# bar plots
+library(ggplot2)
+
+# Temperature x Stirring Rate
+p <- ggplot(filtF, aes(x=Factor_T,y=FR, fill=W)) +
+  stat_summary(fun.y = mean, geom = "bar") +
+  stat_summary(fun.data = mean_se , geom = "errorbar", width=0.2) +
+  coord_cartesian(ylim = c(0, 100)) +
+  theme_bw() + 
+  facet_grid(.~W, labeller = label_parsed) +
+  xlab("Temperature (§C)") + ylab("Filtration Rate (L/min)")
+print(p)
+
+# Temperature x Concentration
+p <- ggplot(filtF, aes(x=Factor_T,y=FR, fill=C)) +
+  stat_summary(fun.y = mean, geom = "bar") +
+  stat_summary(fun.data = mean_se , geom = "errorbar", width=0.2) +
+  coord_cartesian(ylim = c(0, 100)) +
+  theme_bw() + 
+  facet_grid(.~C, labeller = label_parsed) +
+  xlab("Temperature (§C)") + ylab("Filtration Rate (L/min)")
+print(p)
+
+# Temperature x Concentration x Stirring rate
+p <- ggplot(filtF, aes(x=Factor_T,y=FR, fill=W*C)) +
+  stat_summary(fun.y = mean, geom = "bar") +
+  #stat_summary(fun.data = mean_se , geom = "errorbar", width=0.2) +
+  theme_bw() + 
+  facet_grid(C~.~W, labeller = label_both) +
+  xlab("Temperature (§C)") + ylab("Filtration Rate (L/min)")
+print(p)
+
