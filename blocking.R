@@ -2,6 +2,7 @@
 
 # file view
 str(SEYB)
+View(SEYB)
 
 # creating factors for the Analysis of Variance
 SEYB$Factor_S <- as.factor(SEYB$xS)
