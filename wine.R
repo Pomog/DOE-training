@@ -21,6 +21,7 @@
 
 # loading the FrF2 library
 library(FrF2)
+update.packages("FrF2")
 
 # file structure
 str(wine)
@@ -32,6 +33,14 @@ alias(model)
 
 # half-normal score of the effects
 DanielPlot(model, half = TRUE, autolab = FALSE)
+
+model <- lm(Rank ~ (A+B+D+E+F+G)^2 , data=wine)
+summary(model)
+alias(model)
+
+model <- lm(Rank ~ (A+B+D+E+F+G)+A:D+B:D+B:G , data=wine)
+summary(model)
+alias(model)
 
 # main effects and interactions plot
 MEPlot(model) 
