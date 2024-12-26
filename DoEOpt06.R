@@ -24,6 +24,18 @@ library(rsm)
 
 str(DoEOpt06)
 
+# dsg <- ccd(2, alpha="spherical")
+dsg <- ccd(2, alpha="spherical", oneblock = TRUE, n0 = 2,
+           randomize = FALSE)
+dsg
+
+dsg$Time <- dsg$x1*5 + 85
+dsg$Temp <- dsg$x2*5 + 175
+dsg
+
+dsg <- as.data.frame(dsg)
+write.csv(dsg, "ccd.csv")
+
 # setting the realtionship between the coded and the natural variables
 
 DoEOpt06 <- as.coded.data(DoEOpt06, 
