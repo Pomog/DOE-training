@@ -22,7 +22,7 @@ library(rsm)
 # calculating the coded variables 
 
 DoEOpt07$x_v <- (DoEOpt07$v - 350)/31
- DoEOpt07$x_p <- (DoEOpt07$p - 180)/6
+DoEOpt07$x_p <- (DoEOpt07$p - 180)/6
 DoEOpt07$x_g <- (DoEOpt07$g/1.8)
 
 # setting the realtionship between the coded and the natural variables
@@ -37,8 +37,9 @@ str(DoEOpt07)
 ##
 # regression model for the tear
 
-model.Tear <- rsm(Tear ~ FO(x_v,x_p,x_g) + TWI(x_v,x_p,x_g) + PQ(x_v,x_p,x_g), data = DoEOpt07)
-
+# model.Tear <- rsm(Tear ~ FO(x_v,x_p,x_g) + TWI(x_v,x_p,x_g) + PQ(x_v,x_p,x_g), data = DoEOpt07)
+model.Tear <- rsm(Tear ~ FO(x_v,x_p,x_g) + TWI(x_v,x_p,x_g) + PQ(x_g), data = DoEOpt07)
+# model.Tear <- rsm(Tear ~ FO(x_v,x_p,x_g) + TWI(x_v,x_p) + TWI(x_v,x_g) + PQ(x_g), data = DoEOpt07)
 summary(model.Tear)
 
 # residuals plots
@@ -61,7 +62,8 @@ plot(DoEOpt07$g, model.Tear$residuals,
 ##
 # regression model for the leakage
 
-model.Leak <- rsm(Leakage ~ FO(x_v,x_p,x_g) + TWI(x_v,x_p,x_g) + PQ(x_v,x_p,x_g), data = DoEOpt07)
+# model.Leak <- rsm(Leakage ~ FO(x_v,x_p,x_g) + TWI(x_v,x_p,x_g) + PQ(x_v,x_p,x_g), data = DoEOpt07)
+model.Leak <- rsm(Leakage ~ FO(x_p,x_g) + PQ(x_g), data = DoEOpt07)
 
 summary(model.Leak)
 
@@ -223,6 +225,6 @@ ggplot(data = dataD, aes(x=g, y=p, z = D)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   labs(x = "Plate Gap (mm)", y = "Pressure (psi)") +
   facet_wrap(~v) +
-  theme(legend.position = c(0.88, 0.13))
+  theme(legend.position.inside = c(0.88, 0.13))
 ggsave("desirability_StarBucks.png", width = 10, height = 7, dpi = 1000)
 

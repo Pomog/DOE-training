@@ -48,7 +48,8 @@ DoEOpt06 <- as.coded.data(DoEOpt06,
 
 model_Y <- rsm(Y ~ SO(x1,x2), data = DoEOpt06)
 
-model_Y <- rsm(Y ~ FO(x1,x2) + TWI(x1,x2) + PQ(x1,x2), data = DoEOpt06)
+# model_Y <- rsm(Y ~ FO(x1,x2) + TWI(x1,x2) + PQ(x1,x2), data = DoEOpt06)
+model_Y <- rsm(Y ~ FO(x1,x2) + PQ(x1,x2), data = DoEOpt06)
 summary(model_Y)
 
 # contour and perspective plots
@@ -61,8 +62,7 @@ persp(model_Y, ~ x1+x2, col = terrain.colors(50), contours = "colors",
       zlab = "Yield (%)", 
       xlabs=c("Time (min)", "Temperature (ºC)"))
 
-# predictig the Yield at the stationary point
-
+# predict the Yield at the stationary point
 max <- data.frame(x1 = 0.361, x2 = 0.257)
 predict(model_Y, max)
 
