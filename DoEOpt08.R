@@ -31,7 +31,8 @@ str(DoEOpt08)
 ##
 # regression model
 
-model <- rsm(Y ~ FO(x_R,x_t,x_P) + TWI(x_R,x_t,x_P) + PQ(x_R,x_t,x_P), data = DoEOpt08)
+# model <- rsm(Y ~ FO(x_R,x_t,x_P) + TWI(x_R,x_t,x_P) + PQ(x_R,x_t,x_P), data = DoEOpt08)
+model <- rsm(Y ~ FO(x_R,x_t,x_P) + PQ(x_R,x_t,x_P), data = DoEOpt08)
 summary(model)
 
 
