@@ -39,12 +39,12 @@ doe_data$AcidAdditionRate <- factor(doe_data$AcidAdditionRate, levels = c(-1, 1)
 
 # Now create the interaction plot
 interaction.plot(
-  x.factor = doe_data$CoolingRate, 
-  trace.factor = doe_data$AcidAdditionRate, 
+  x.factor = doe_data$AcidAdditionRate, 
+  trace.factor = doe_data$CoolingRate, 
   response = doe_data$Yield,
-  xlab = "Cooling Rate", 
+  xlab = "Acid Addition Rate", 
   ylab = "Yield", 
-  trace.label = "Acid Addition Rate",
+  trace.label = "Cooling Rate",
   col = c("blue", "red"), 
   lty = 1:2, 
   type = "b",
@@ -52,7 +52,7 @@ interaction.plot(
 )
 
 # Add the legend for better clarity
-legend("topleft", legend = c("Slow Acid Addition", "Fast Acid Addition"), col = c("blue", "red"), lty = 1:2, title = "Acid Addition Rate")
+legend("topright", legend = c("1 - Slow", "2 - Fast"), col = c("blue", "red"), lty = 1:2, title = "Cooling Rate")
 
 
 
