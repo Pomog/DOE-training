@@ -31,7 +31,7 @@ model.Yield_percent <- rsm(Yield_percent ~ FO(volume), data = b5)
 # Check model summary
 summary(model.Yield_percent)
 
-par(mfrow=c(2,2))
+par(mfrow=c(2,3))
 
 plot(b5$Yield_percent, model.Yield_percent$residuals, 
      xlab = "Yield_percent (experimental)", ylab = "residuals") + 
@@ -47,22 +47,3 @@ plot(b5$Acid_eq, model.Yield_percent$residuals,
 
 plot(b5$Solvent_V, b5$Yield_percent, 
      xlab = "Solvent_V", ylab = "Yield_percent")
-
-
-
-# Fit a second-order response surface model
-model <- rsm(Yield_percent ~ SO(x1, x2), data = b5)
-
-# Check model summary
-summary(model)
-
-# Generate a contour plot with coded variables
-contour(model, ~ x1 + x2, image = TRUE)
-
-nge05
-
-# Check model summary
-summary(model)
-str(b5)
-
-
