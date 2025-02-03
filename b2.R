@@ -78,3 +78,47 @@ plot(b5$Acid_eq, model.Yield_percent$residuals,
 
 plot(b5$Solvent_V, b5$Yield_percent, 
      xlab = "Solvent_V", ylab = "Yield_percent")
+
+# Now calculations for Assay
+#b6_clean <- b6[-c(9, 13), ]  # Remove rows 9 and 13
+nrow(b6)        # Number of rows in original data
+#nrow(b6_clean)  # Number of rows after removal
+#str(b6_clean)
+str(b6)
+
+# loading Response Surface Methodology package
+library(rsm)
+
+# Define real variable ranges
+Solvent_V_min <- 8
+Solvent_V_max <- 16
+Acid_eq_min <- 1.0
+Acid_eq_max <- 1.8
+
+# Calculate center and range
+Solvent_V_center <- (Solvent_V_max + Solvent_V_min) / 2
+Solvent_V_range05 <- (Solvent_V_max - Solvent_V_min) / 2
+
+Acid_eq_center <- (Acid_eq_max + Acid_eq_min) / 2
+Acid_eq_range05 <- (Acid_eq_max - Acid_eq_min) / 2
+
+# calculating the coded variables 
+b6$volume <- (b6$Solvent_V - Solvent_V_center)/Solvent_V_range05
+b6$eq <- (b6$Acid_eq - Acid_eq_center)/Acid_eq_range05
+
+# setting the relationship between the coded and the natural variables
+b6 <- as.coded.data(b6, 
+                    volume ~ (Solvent_V - 12)/4,
+                    eq ~ (Acid_eq - 1.4)/0.4)
+
+str(b6)
+
+model.Assay <- rsm(Assay ~ FO(volume,eq) + TWI(volume,eq) + PQ(volume,eq), data = b6)
+#model.Assay <- rsm(Assay ~ FO(volume, eq), data = b6_clean)
+summary(model.Assay)
+# Check model summary
+summary(model.Assay)
+plot(model.Assay, which=1)
+
+par(mfrow=c(2,2))  # Multiple plots
+plot(model.Assay)   # Check all diagnostic plots
