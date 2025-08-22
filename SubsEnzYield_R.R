@@ -14,11 +14,11 @@ anova <- aov(Yield ~ Factor_S + Factor_E + Factor_S:Factor_E, data=SubsEnzYield_
 summary(anova)
 
 # regression model with coded variables	
-coded.model <- lm(Yield ~ xS + xE, data = SubsEnzYield)
+coded.model <- lm(Yield ~ xS + xE, data = SubsEnzYield_r)
 summary(coded.model)
 
 # regression model with natural variables
-nat.model <- lm(Yield ~ Substrate + Enzyme, data = SubsEnzYield)
+nat.model <- lm(Yield ~ Substrate + Enzyme, data = SubsEnzYield_r)
 summary(nat.model)
 
 # contour plot
@@ -28,7 +28,7 @@ contour(nat.model, ~ Substrate+Enzyme,
         xlabs=c("Enzyme (g/L)","Substrate (g/L)" ))
 
 # residual plot
-plot(SubsEnzYield$Yield, nat.model$residuals,
+plot(SubsEnzYield_r$Yield, nat.model$residuals,
      xlab = "Experimental Results", ylab = "Residuals") +
   abline(h=0, col = "gray75")
 
@@ -37,7 +37,7 @@ plot(SubsEnzYield$Yield, nat.model$residuals,
 install.packages("dplyr") # run this line code if the dplyr package will be used for the first time.
 
 library(dplyr)
-dt <- group_by(SubsEnzYield, Substrate, Enzyme) %>%
+dt <- group_by(SubsEnzYield_r, Substrate, Enzyme) %>%
   summarise(mean=mean(Yield), sd=sd(Yield), n=n())
 View(dt)
 
