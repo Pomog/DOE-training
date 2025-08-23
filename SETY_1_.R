@@ -11,19 +11,19 @@ str(SETY_1_)
 View(SETY_1_)
 
 #ANOVA
-anova <- aov(Yield ~ Factor_T*Factor_S*Factor_E, data = SETY)
+anova <- aov(Yield ~ Factor_T*Factor_S*Factor_E, data = SETY_1_)
 summary(anova)
 
 # regression model with coded variables
-coded.model <- lm(Yield ~ xT + xS + xE + xT*xE, data = SETY)
+coded.model <- lm(Yield ~ xT + xS + xE + xT*xE, data = SETY_1_)
 summary(coded.model)
 
 # regression model with natural variables
-nat.model <- lm(Yield ~ T + S + xE + T*xE, data = SETY)
+nat.model <- lm(Yield ~ T + S + xE + T*xE, data = SETY_1_)
 summary(nat.model)
 
 # residual plot
-plot(SETY$Yield,nat.model$residuals,
+plot(SETY_1_$Yield,nat.model$residuals,
      xlab = "Experimental Results", ylab = "Residuals") +
   abline(h=0, col = "gray75")
 
@@ -31,8 +31,8 @@ plot(SETY$Yield,nat.model$residuals,
 library(rsm)
 par(mfrow = c(1,2)) # creates a window for 2 plots
 contour(nat.model, ~T+S, image = TRUE, at = c(xE=-1),
-        #zlim = c(45,85),
+        zlim = c(45,85),
         xlabs = c("Substrate (g/L)", "Temperature (?C)"))
 contour(nat.model, ~T+S, image = TRUE, at = c(xE=+1),
-        #zlim = c(45,85),
+        zlim = c(45,85),
         xlabs = c("Substrate (g/L)", "Temperature (?C)"))
