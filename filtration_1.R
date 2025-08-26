@@ -1,28 +1,28 @@
 # Analysis of a Unreplicated 2ˆ4 Factorial Design
 
 #visulalize data
-str(filtration)
+str(filtration_1_)
 
 #creating factors for the Analysis of Variance
-filtration$Factor_T <- as.factor(filtration$T)
-filtration$Factor_P <- as.factor(filtration$P)
-filtration$Factor_C <- as.factor(filtration$C)
-filtration$Factor_W <- as.factor(filtration$W)
-str(filtration)
-View(filtration)
+filtration_1_$Factor_T <- as.factor(filtration_1_$T)
+filtration_1_$Factor_P <- as.factor(filtration_1_$P)
+filtration_1_$Factor_C <- as.factor(filtration_1_$C)
+filtration_1_$Factor_W <- as.factor(filtration_1_$W)
+str(filtration_1_)
+View(filtration_1_)
 
 #ANOVA
-anova1 <- aov(filt ~ Factor_T*Factor_P*Factor_C*Factor_W, data = filtration)
+anova1 <- aov(filt ~ Factor_T*Factor_P*Factor_C*Factor_W, data = filtration_1_)
 summary(anova1)
 
-anova2 <- aov(filt ~ (Factor_T+Factor_P+Factor_C+Factor_W)^2, data = filtration)
+anova2 <- aov(filt ~ (Factor_T+Factor_P+Factor_C+Factor_W)^2, data = filtration_1_)
 summary(anova2)
 
-anova3 <- aov(filt ~ (Factor_T+Factor_C+Factor_W)^2, data = filtration)
+anova3 <- aov(filt ~ (Factor_T+Factor_C+Factor_W)^2, data = filtration_1_)
 summary(anova3)
 
 
-anova4 <- aov(filt ~ Factor_T+Factor_C+Factor_W + Factor_T:Factor_C + Factor_T:Factor_W, data = filtration)
+anova4 <- aov(filt ~ Factor_T+Factor_C+Factor_W + Factor_T:Factor_C + Factor_T:Factor_W, data = filtration_1_)
 summary(anova4)
 
 # regression model with coded variables
